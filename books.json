@@ -2,7 +2,6 @@
     {
         "title": "To Kill A Mockingbird",
         "author_name": "Harper Lee",
- 
         "price": 336,
         "id": 9780061120084
     },
@@ -15,7 +14,6 @@
     {
         "title": "One Hundred Years Of Solitude",
         "author_name": "Gabriel Garcia Marquez",
- 
         "price": 457,
         "id": 9785267006323
     }

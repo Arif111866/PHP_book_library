@@ -52,11 +52,47 @@ function searchBooks($query) {
 
 // Example usage:
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($_POST['operation'] == 'add'){
+        $book = [
+            'title' => $_POST['title'],
+            'author_name' => $_POST['author_name'],
+            'id' => (int) $_POST['id'],
+            'price' => (int) $_POST['price']
+        ];
+        addBook($book);
+        $books = readBooks();
+    }else{
+        deleteBook($_POST['id']) ;
+        $books = readBooks();
+    }
     
-} else {
-    
-    $books = readBooks();
 }
+else if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['operation']) && $_GET['operation'] == 'Search')
+{
+    $books = readBooks();
+    echo '<table border="1">
+    <tr>
+        <th>Book Title</th>
+        <th>Author Name</th>
+        <th>ID</th>
+        <th>Price</th>
+    </tr>';
+    foreach ($books as $book) {
+        if (stripos($book['title'], $_GET['title']) !== false){
+            echo '<tr>';
+            echo '<td>' . $book['title'] . '</td>';
+            echo '<td>' . $book['author_name'] . '</td>';
+            echo '<td>' . $book['id'] . '</td>';
+            echo '<td>' . $book['price'] . '</td>';
+            echo '<\tr>' ;
+        }
+    }
+} 
+else {
+    $books = readBooks();
+}   
+// page formate by html code
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -79,14 +115,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <label for="price">Price----------:</label>
         <input type="text" name="price" required><br><br>
+        <input type="text" name="operation" value="add" hidden>
 
         <input type="submit" value="Add Book"><br><br>
+    </form>
+    <!-- delete a book -->
+    <form method="post" action="">
+        <label for="id">ID ------------:</label>
+        <input type="text" name="id" required><br><br>
+        <input type="text" name="operation" value="delete" hidden>
+        <input type="submit" value="Delete by ID"><br><br>
     </form>
 
     <!-- Search form -->
     <form method="get" action="">
         <h4>You can search Book here by Book title</h2>  
-        <input type="text" name="search" placeholder="Search by title">
+        <input type="hidden" name="operation" value="Search">
+        <input type="text" name="title" placeholder="Search by title">
         <input type="submit" value="Search"> <br><br><br>
     </form>
 
@@ -94,9 +139,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <table border="1">
     <tr>
         <th>Book Title</th>
+        <th>Author Name</th>
         <th>ID</th>
         <th>Price</th>
-        <th>Author Name</th>
     </tr>
     <?php foreach ($books as $book): ?>
         <tr>
