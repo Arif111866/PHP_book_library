@@ -121,6 +121,7 @@ else {
     </form>
     <!-- delete a book -->
     <form method="post" action="">
+        <h4>Delete Book by Book ID</h4>
         <label for="id">ID ------------:</label>
         <input type="text" name="id" required><br><br>
         <input type="text" name="operation" value="delete" hidden>
@@ -129,7 +130,7 @@ else {
 
     <!-- Search form -->
     <form method="get" action="">
-        <h4>You can search Book here by Book title</h2>  
+        <h4>You can search here Book by Book title</h2>  
         <input type="hidden" name="operation" value="Search">
         <input type="text" name="title" placeholder="Search by title">
         <input type="submit" value="Search"> <br><br><br>
@@ -137,6 +138,8 @@ else {
 
    <!-- Display the list of books in a table -->
 <table border="1">
+    <br>
+    <h3>Book List </h3>
     <tr>
         <th>Book Title</th>
         <th>Author Name</th>
